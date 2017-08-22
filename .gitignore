@@ -1,0 +1,8 @@
+#System
+.DS_Store
+.idea/
+
+# Node
+node_modules/
+package-lock.json
+*.zip

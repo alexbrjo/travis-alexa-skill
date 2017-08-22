@@ -1,0 +1,13 @@
+{
+  "intents": [
+    {
+      "slots": [
+        {
+          "name": "Job",
+          "type": "AMAZON.SoftwareApplication"
+        }
+      ],
+      "intent": "Jobstatus"
+    }
+  ]
+}

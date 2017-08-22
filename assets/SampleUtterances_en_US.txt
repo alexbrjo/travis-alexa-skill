@@ -1,0 +1,5 @@
+Jobstatus	how is the job {Job}
+Jobstatus	how is the status of {Job}
+Jobstatus	what is the status of {Job}
+Jobstatus	what is the build status of {Job}
+Jobstatus       what is the status of job {Job}

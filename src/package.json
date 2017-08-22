@@ -1,0 +1,25 @@
+{
+  "name": "jenkins-alexa-skill",
+  "version": "0.1.0",
+  "description": "An alexa skill for checking the job status of public Jenkins builds",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexbrjo/jenkins-alexa-skill"
+  },
+  "keywords": [
+    "jenkins",
+    "ci"
+  ],
+  "author": "alexbrjo",
+  "license": "MIT",
+  "dependencies": {
+    "alexa-sdk": "^1.0.6",
+    "fuzzysearch": "^1.0.3",
+    "request": "^2.34",
+    "sync-request": "^4.1.0"
+  }
+}

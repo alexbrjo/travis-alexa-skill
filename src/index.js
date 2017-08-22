@@ -2,6 +2,7 @@
 
 const Alexa = require('alexa-sdk');
 var request = require('sync-request');
+var FuzzySet = require('fuzzyset.js');
 
 const TRAVIS_URL = "https://api.travis-ci.org";
 const GITHUB_API_KEY = process.env.GITHUB_API_KEY; // add in lambda
@@ -15,22 +16,53 @@ const handlers = {
         this.emit('Jobstatus');
     },
     'Jobstatus': function () {
-        var jobName = this.event.request.intent.slots.Job;
-        var fuzzyJobName = jobName.value.toLowerCase();
         /* 
             Use sync-request because we need a response in sync. 
             Lambda will control time outs (currently 7s)
         */
-        var raw = request('GET', TRAVIS_URL + '/repos/alexbrjo/' + fuzzyJobName, {
+        var raw = request('GET', TRAVIS_URL + '/repos/alexbrjo.json', {
             'headers': {
                 'User-Agent' : 'TravisCIAlexSkill/0.1.0 ',
-                'Accept' : 'application/vnd.travis-ci.2+json'//,
-                //'Authorization' : 'token ' + travisApiKey
+                'Accept' : 'application/vnd.travis-ci.2+json'
             }
         });
-        var data = JSON.parse(raw.getBody('utf8'));
+        var repos = JSON.parse(raw.getBody('utf8'));
+        var fuzzy = {
+            names: [],
+            repos: {}
+        };
+        for (var i = 0; i < repos.length; i++) {
+            var repo = repos[i];
+            if (repo.active) {
+                var name = repo.slug.split('/')[1];
+                fuzzy.names.push(name);
+                fuzzy.repos[name] = repo;
+            }
+        }
         
-        this.emit(':tell', data.healthReport[0].description);
+        // Use FuzzySet.js to match a repo
+        var matchedRepo;
+        var fs = FuzzySet(fuzzy.names);
+        var evaled = fs.get(this.event.request.intent.slots.Job.value);
+        if (evaled.length > 0) {
+            matchedRepo = fuzzy.repos[evaled[0][1]];
+        } else {
+            this.emit(':tell', 'No repo was found for that name');
+        }
+        
+        switch(matchedRepo.last_build_status) {
+            case 0:
+                this.emit(':tell', 'The last build was successful');
+                break;
+            case 1:
+                this.emit(':tell', 'The last build was unsuccessful');
+                break;
+            default: 
+                case 1:
+                this.emit(':tell', 'This repository has not been built');
+                break;
+        }
+        
     },
     'AMAZON.HelpIntent': function () {
         const speechOutput = this.t('HELP_MESSAGE');
@@ -46,20 +78,6 @@ const handlers = {
 };
 
 exports.handler = function (event, context) {
-
-    /*var authPost = request('POST', TRAVIS_URL + '/auth/github', {
-        'json': { 'github_token' : GITHUB_API_KEY },
-        'headers': {
-            'User-Agent' : 'TravisCIAlexSkill/0.1.0 ',
-            'Accept' : 'application/vnd.travis-ci.2+json'
-        }
-    });
-    console.log(authPost.getBody('utf8'));
-    console.log(authPost.headers);
-    travisApiKey = JSON.parse(authPost.getBody('utf8')).access_token;
-    console.log(JSON.parse(authPost.getBody('utf8')));
-    console.log(travisApiKey);*/
-    
     const alexa = Alexa.handler(event, context);
     alexa.APP_ID = "amzn1.ask.skill.0afa38e5-8ae4-452f-9a01-ed077f3a7920";
     alexa.registerHandlers(handlers);

@@ -3,11 +3,15 @@
     {
       "slots": [
         {
-          "name": "Job",
+          "name": "Repo",
           "type": "AMAZON.SoftwareApplication"
+        },
+        {
+          "name": "User",
+          "type": "AMAZON.AdministrativeArea"
         }
       ],
-      "intent": "Jobstatus"
+      "intent": "Repostatus"
     }
   ]
 }

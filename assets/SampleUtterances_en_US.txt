@@ -1,15 +1,15 @@
-Repostatus	how is the job {Repo}
-Repostatus	how is the status of {Repo}
-Repostatus	what is the status of {Repo}
-Repostatus	what is the build status of {Repo}
-Repostatus	what is the status of job {Repo}
-Repostatus	my username is {User}
-Repostatus	my users name is {User}
-Repostatus	my organization is {User}
-Repostatus	my organizations name is {User}
-Repostatus	how is the job {Repo} in {User}
-Repostatus	how is the status of {Repo} in {User}
-Repostatus	what is the status of {Repo} in {User}
-Repostatus	what is the build status of {Repo} in {User}
-Repostatus	what is the status of job {Repo} in {User}
-
+Repostatus how is the job {Repo}
+Repostatus how is the status of {Repo}
+Repostatus what is the status of {Repo}
+Repostatus what is the build status of {Repo}
+Repostatus what is the status of job {Repo}
+Setuser    username {User}
+Setuser    organization {User}
+Setuser    my username is {User}
+Setuser    my username is spelled {User}
+Setuser    the username is {User}
+Setuser    the username is spelled {User}
+Setuser    my organization is {User}
+Setuser    my organization is spelled {User}
+Setuser    the organization is {User}
+Setuser    the organization is spelled {User}

@@ -1,17 +1,22 @@
 {
   "intents": [
     {
+      "intent": "Repostatus",
       "slots": [
         {
           "name": "Repo",
           "type": "AMAZON.SoftwareApplication"
-        },
+        }
+      ]
+    },
+    {
+      "intent": "Setuser",
+      "slots": [
         {
           "name": "User",
-          "type": "AMAZON.AdministrativeArea"
+          "type": "AMAZON.LITERAL"
         }
-      ],
-      "intent": "Repostatus"
+      ]
     }
   ]
 }

@@ -23,3 +23,15 @@ Achive.zip/
         ...
     package.json
 ```
+
+## Decision Tree
+
+States
+  - Has nothing
+    - Setuser : will set user
+    - Repostatus: please specify user
+    - Moreinfo : please specify user and repo. Lets start with repo
+  - Has Username
+    - Setuser : will reset user
+    - Repostatus: gets repo status
+    - Moreinfo : please specify repo
